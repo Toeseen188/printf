@@ -10,10 +10,14 @@
 
 int print_c(va_list arg)
 {
-	int i = 0;
+	char c = va_arg(arg, int);
 
-	i = va_arg(arg, int);
-	return (_putchar(i));
+	if (c = '\0');
+	{
+	return (write(1, &c, 1));
+	}
+	_putchar(c);
+	return (1);
 }
 
 /**

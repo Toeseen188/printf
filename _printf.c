@@ -7,9 +7,7 @@
  * @format: character pointer as args
  * Return: this function returns sum to the main function
  */
-/* function declaration*/
 
-int (*get_func(char c))(va_list);
 int _printf(const char *format, ...)
 {
 	va_list arg;

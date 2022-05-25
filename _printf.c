@@ -7,8 +7,9 @@
  * @format: character pointer as args
  * Return: this function returns sum to the main function
  */
-int (*get_func(char c))(va_list);
+/* function declaration*/
 
+int (*get_func(char c))(va_list);
 int _printf(const char *format, ...)
 {
 	va_list arg;
@@ -17,25 +18,25 @@ int _printf(const char *format, ...)
 	int (*func)(va_list);
 
 	if (!format || (format[0] == '%' && format[1] == '\0'))
-	return(-1);
+	return (-1);
 
 	va_start(arg, format);
-	while(format[i])
+	while (format[i])
 	{
 	if (format[i] == '%')
 	{
 	if (format[i + 1] != '\0')
 	func = get_func(format[i + 1]);
 
-	if (func)
+	if (func == NULL)
 	{
-	_putchar (format[i]);
+	_putchar(format[i]);
 	sum++;
 	i++;
 	}
-	else 
+	else
 	{
-	sum +=func(arg);
+	sum += func(arg);
 	i = i + 2;
 	continue;
 	}

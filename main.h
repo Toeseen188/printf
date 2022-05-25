@@ -3,7 +3,7 @@
 #include <stdarg.h>
 typedef struct specifier
 {
-	chat *c;
+	char *c;
 	int (*f)(va_list);
 } specify;
 

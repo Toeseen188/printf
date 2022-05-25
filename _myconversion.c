@@ -12,7 +12,7 @@ int print_c(va_list arg)
 {
 	char c = va_arg(arg, int);
 
-	if (c = '\0');
+	if (c == '\0')
 	{
 	return (write(1, &c, 1));
 	}

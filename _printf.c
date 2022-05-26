@@ -64,7 +64,10 @@ int (*get_func(char  c))(va_list arg)
 
 		{"c", print_c},
 		{"s", print_s},
-		{"%", print_percent}
+		{"%", print_percent},
+		{"d", print_d},
+		{"i", print_i},
+		{NULL, NULL}
 	};
 	while (spec[i].c)
 	{

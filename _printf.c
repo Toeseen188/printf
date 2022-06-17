@@ -1,31 +1,66 @@
-#include <stdio.h>
-#include "main.h"
 #include <stdarg.h>
-#include <stdlib.h>
+#include "main.h"
+#include <stddef.h>
+
 /**
- * _printf - prints strings and calculate sum
- * @format: character pointer as args
- * Return: this function returns sum to the main function
+ * get_op - select function for conversion char
+ * @c: char to check
+ * Return: pointer to function
+ */
+
+int (*get_op(const char c))(va_list)
+{
+	int i = 0;
+
+	flags_p fp[] = {
+		{"c", print_char},
+		{"s", print_str},
+		{"i", print_nbr},
+		{"d", print_nbr},
+		{"b", print_binary},
+		{"o", print_octal},
+		{"x", print_hexa_lower},
+		{"X", print_hexa_upper},
+		{"u", print_unsigned},
+		{"S", print_str_unprintable},
+		{"r", print_str_reverse},
+		{"p", print_ptr},
+		{"R", print_rot13},
+		{"%", print_percent}
+		};
+	while (i < 14)
+	{
+	if (c == fp[i].c[0])
+	{
+	return (fp[i].f);
+	}
+	i++;
+	}
+	return (NULL);
+}
+
+/**
+ * _printf - Reproduce behavior of printf function
+ * @format: format string
+ * Return: value of printed chars
  */
 
 int _printf(const char *format, ...)
 {
-	va_list arg;
-	int sum = 0;
-	int i = 0;
-	int (*func)(va_list);
+	va_list ap;
+	int sum = 0, i = 0;
+	int (*func)();
 
 	if (!format || (format[0] == '%' && format[1] == '\0'))
 	return (-1);
+	va_start(ap, format);
 
-	va_start(arg, format);
 	while (format[i])
 	{
 	if (format[i] == '%')
 	{
 	if (format[i + 1] != '\0')
-	func = get_func(format[i + 1]);
-
+	func = get_op(format[i + 1]);
 	if (func == NULL)
 	{
 	_putchar(format[i]);
@@ -34,8 +69,8 @@ int _printf(const char *format, ...)
 	}
 	else
 	{
-	sum += func(arg);
-	i = i + 2;
+	sum += func(ap);
+	i += 2;
 	continue;
 	}
 	}
@@ -46,37 +81,6 @@ int _printf(const char *format, ...)
 	i++;
 	}
 	}
-	va_end(arg);
+	va_end(ap);
 	return (sum);
-}
-
-/**
- * get_func - this function check for the specifier
- * @c: this is a variable arg to the funtion
- * Return: returns the function back to the call routine
-*/
-
-int (*get_func(char  c))(va_list arg)
-{
-	int i = 0;
-
-	specify spec[] = {
-
-		{"c", print_c},
-		{"s", print_s},
-		{"%", print_percent},
-		{"d", print_d},
-		{"i", print_i},
-		{NULL, NULL}
-	};
-	while (spec[i].c)
-	{
-	if (c == spec[i].c[0])
-	{
-	return (spec[i].f);
-	}
-	i++;
-	}
-	return (NULL);
-
 }
